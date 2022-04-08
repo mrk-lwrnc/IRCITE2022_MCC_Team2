@@ -7,9 +7,9 @@ module.exports = {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
     // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-minimal-blog/gatsby-config.js
-    siteTitle: `MCC Team 2 - IRCITE2022`,
-    siteTitleAlt: `IRCITE2022's Hackathon - MCC Team 2`,
-    siteHeadline: `IRCITE2022's Hackathon from @mrk-lwrnc`,
+    siteTitle: `Employee Management System`,
+    siteTitleAlt: `Employee Management System - MCC Team 2`,
+    siteHeadline: `Employee Management System from @mrk-lwrnc`,
     siteUrl: `https://minimal-blog.lekoarts.de`,
     siteDescription: `Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.`,
     siteLanguage: `en`,
@@ -23,8 +23,12 @@ module.exports = {
       options: {
         navigation: [
           {
-            title: `Blog`,
-            slug: `/blog`,
+            title: `Employees`,
+            slug: `/employee`,
+          },
+          {
+            title: `Accounts`,
+            slug: `/account`,
           },
           {
             title: `About`,
