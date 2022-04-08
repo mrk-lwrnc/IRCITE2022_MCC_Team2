@@ -5,10 +5,9 @@ exports.getEmployeeById = (req, res) => {
         if (err) {
             res.status(404)
         } else {
-            res.status(404)
-            /*.json({
-                            employee: fetchData
-                        })*/
+            res.status(200).json({
+                employee: fetchData
+            })
         }
     })
 }
@@ -22,8 +21,7 @@ exports.getAllEmployees = (req, res) => {
 }
 
 exports.deleteEmployeeById = (req, res) => {
-    employees.deleteEmployeeById(req.params.id, (err, _) => {
-        console.log(req.params.id)
+    employees.deleteEmployeeById(req.params.id, (err, __) => {
         if (err) {
             res.status(404)
         } else {
