@@ -5,7 +5,7 @@ exports.getEmployeeById = (req, res) => {
         if (err) {
             res.status(404)
         } else {
-            res.status(200).json({
+            res.status(404).json({
                 employee: fetchData
             })
         }
