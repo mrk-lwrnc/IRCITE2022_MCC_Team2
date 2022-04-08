@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Themed, Flex, Button, Divider, Card, Input, Heading, Label } from 'theme-ui'
+import { Themed, Flex, Button, Divider, Input, Heading, Label } from 'theme-ui'
 
 class EmployeeList extends Component {
     constructor(props) {
@@ -8,6 +8,8 @@ class EmployeeList extends Component {
         this.state = { employeeList: [] }
 
         this.getEmployeeList = this.getEmployeeList.bind(this)
+        this.addEmployee = this.addEmployee.bind(this)
+        this.deleteEmployee = this.deleteEmployee.bind(this)
     }
 
     async componentDidMount() {
@@ -15,11 +17,48 @@ class EmployeeList extends Component {
     }
 
     getEmployeeList() {
-        axios.get('https://4000-mrklwrnc-ircite2022mccte-g8mbxxuuogr.ws-us38.gitpod.io/management/employee/')
+        axios.get('https://6000-mrklwrnc-ircite2022mccte-g8mbxxuuogr.ws-us38.gitpod.io/management/employee/')
         .then(result => {
             this.setState({ employeeList: result.data.employee })
-            console.log(this.state.employeeList)
         }).catch(error => console.log(error))
+    }
+
+    addEmployee() {
+        const firstName = document.querySelector('#employeeFirstName')
+        const lastName = document.querySelector('#employeeLastName')
+        const position = document.querySelector('#employeePosition')
+        const sickLeaveCredits = document.querySelector('#employeeSickLeaveCredits')
+        const vacationLeaveCredits = document.querySelector('#employeeVacationLeaveCredits')
+        const hourlyRate = document.querySelector('#employeeHourlyRate')
+
+        if (firstName.value === null || firstName.value.trim() === '') { return }
+        if (lastName.value === null || lastName.value.trim() === '') { return }
+        if (position.value === null || position.value.trim() === '') { return }
+        if (sickLeaveCredits.value === null || sickLeaveCredits.value.trim() === '') { return }
+        if (vacationLeaveCredits.value === null || vacationLeaveCredits.value.trim() === '') { return }
+        if (hourlyRate.value === null || hourlyRate.value.trim() === '') { return }
+
+        axios.post('https://6000-mrklwrnc-ircite2022mccte-g8mbxxuuogr.ws-us38.gitpod.io/management/employee/', {
+            'firstName': firstName.value,
+            'lastName': lastName.value,
+            'position': position.value,
+            'sickLeaveCredits': sickLeaveCredits.value,
+            'vacationLeaveCredits': vacationLeaveCredits.value,
+            'hourlyRate': hourlyRate.value,
+        }).then(response => {
+            this.getEmployeeList()
+            document.querySelector('#employeeFirstName').value = ''
+            document.querySelector('#employeeLastName').value = ''
+            document.querySelector('#employeePosition').value = ''
+            document.querySelector('#employeeSickLeaveCredits').value = ''
+            document.querySelector('#employeeVacationLeaveCredits').value = ''
+            document.querySelector('#employeeHourlyRate').value = ''
+        }).catch(error => console.log(error))
+    }
+
+    deleteEmployee(_, id) {
+        axios.delete(`https://6000-mrklwrnc-ircite2022mccte-g8mbxxuuogr.ws-us38.gitpod.io/management/employee/${id}`)
+        .then(response => this.getEmployeeList()).catch(error => console.log(error))
     }
 
     render() {
@@ -33,7 +72,7 @@ class EmployeeList extends Component {
                 }}>
                     <Heading sx={{ marginBottom: 3 }}>Create Employee</Heading>
                     <Label htmlFor='employeeID'>First Name</Label>
-                    <Input sx={{ flex: '1 1 0', marginBottom: 3, maxWidth: '30em' }} name='employeeID' id='employeeFirstName' />
+                    <Input sx={{ flex: '1 1 0', marginBottom: 3, maxWidth: '30em' }} name='employeeFirstName' id='employeeFirstName' />
                     <Label htmlFor='employeeID'>Last Name</Label>
                     <Input sx={{ flex: '1 1 0', marginBottom: 3, maxWidth: '30em' }} name='employeeLastName' id='employeeLastName' />
                     <Label htmlFor='employeeID'>Position</Label>
@@ -44,7 +83,7 @@ class EmployeeList extends Component {
                     <Input sx={{ flex: '1 1 0', marginBottom: 3, maxWidth: '30em' }} name='employeeVacationLeaveCredits' id='employeeVacationLeaveCredits' />
                     <Label htmlFor='employeeID'>Hourly Rate</Label>
                     <Input sx={{ flex: '1 1 0', marginBottom: 3, maxWidth: '30em' }} name='employeeHourlyRate' id='employeeHourlyRate' />
-                    <Button>Create</Button>
+                    <Button onClick={this.addEmployee}>Create</Button>
                 </div>
                 <Divider />
                 <Themed.table>
@@ -72,7 +111,7 @@ class EmployeeList extends Component {
                                     <Themed.td>
                                         <Flex sx={{flexDirection: 'column'}}>
                                             <Button color='text' bg='background' sx={{marginBottom: 1, border: '1px solid'}}>Update</Button>
-                                            <Button color='text' bg='background' sx={{marginBottom: 1, border: '1px solid'}}>Delete</Button>
+                                            <Button onClick={(event) => this.deleteEmployee(event, id)} color='text' bg='background' sx={{marginBottom: 1, border: '1px solid'}}>Delete</Button>
                                         </Flex>
                                     </Themed.td>
                             </Themed.tr>

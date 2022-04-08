@@ -5,9 +5,10 @@ exports.getEmployeeById = (req, res) => {
         if (err) {
             res.status(404)
         } else {
-            res.status(200).json({
-                employee: fetchData
-            })
+            res.status(404)
+            /*.json({
+                            employee: fetchData
+                        })*/
         }
     })
 }
@@ -21,11 +22,14 @@ exports.getAllEmployees = (req, res) => {
 }
 
 exports.deleteEmployeeById = (req, res) => {
-    employees.deleteEmployeeById(req.params.id, (err, status) => {
+    employees.deleteEmployeeById(req.params.id, (err, _) => {
+        console.log(req.params.id)
         if (err) {
             res.status(404)
         } else {
-            res.status(200)
+            res.status(200).json({
+                status: true
+            })
         }
     })
 }
@@ -45,7 +49,9 @@ exports.updateEmployeeById = (req, res) => {
 exports.createEmployee = (req, res) => {
     employees.createEmployee(req.body, (err, fetchData) => {
         if (err) {
-            res.status(309)
+            res.status(309).json({
+                status: false
+            })
         } else {
             res.status(200).json({
                 employee: fetchData
