@@ -16,7 +16,6 @@ class employees {
 
     static deleteEmployeeById(id, result) {
         dbconnect.query('DELETE FROM employees WHERE id=?', id, (err, res) => {
-            console.log(id)
             result(err, res)
         })
     }
